@@ -195,3 +195,19 @@
 [ "(" ")" "[" "]" ] @punctuation.bracket
 [ "," ":" ";" "."  ] @punctuation.delimiter
 "#" @punctuation.special
+
+; ---------------------------------------------------------------------------
+; TwinCAT: structured pragmas
+; ---------------------------------------------------------------------------
+; `pragma` wraps these nodes with the same range and is captured above, so the
+; directive captures go on the children: a nested capture wins in every editor.
+(attribute_pragma) @attribute
+(attribute_pragma
+  name: (string_literal) @attribute)
+
+(conditional_directive
+  kind: (_) @keyword.directive)
+(conditional_directive
+  "}" @keyword.directive)
+(conditional_directive
+  condition: (condition_text) @string.special)

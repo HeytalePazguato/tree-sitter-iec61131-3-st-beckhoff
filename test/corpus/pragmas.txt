@@ -1,0 +1,304 @@
+================================================================================
+Attribute pragma with a name only
+================================================================================
+
+{attribute 'call_after_init'}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pragma
+    (attribute_pragma
+      name: (string_literal))))
+
+================================================================================
+Attribute pragma with a name and a value
+================================================================================
+
+{attribute 'displaymode' := 'hex'}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pragma
+    (attribute_pragma
+      name: (string_literal)
+      value: (string_literal))))
+
+================================================================================
+Attribute pragma spacing and casing
+================================================================================
+
+{ ATTRIBUTE   'pack_mode'   :=   '1' }
+{attribute'tight':='v'}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pragma
+    (attribute_pragma
+      name: (string_literal)
+      value: (string_literal)))
+  (pragma
+    (attribute_pragma
+      name: (string_literal)
+      value: (string_literal))))
+
+================================================================================
+Attribute pragma keeps a brace inside its string
+================================================================================
+
+{attribute 'a}b'}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pragma
+    (attribute_pragma
+      name: (string_literal))))
+
+================================================================================
+Attribute pragmas on a function block, its variables and its struct fields
+================================================================================
+
+{attribute 'no_check'}
+FUNCTION_BLOCK FB_Probe
+VAR
+    {attribute 'monitoring' := 'call'}
+    nCount : DINT;
+    {attribute 'displaymode' := 'hex'}
+    nMask : WORD := 16#00FF;
+END_VAR
+END_FUNCTION_BLOCK
+
+TYPE ST_Data :
+STRUCT
+    {attribute 'hide'}
+    nValue : INT;
+END_STRUCT;
+END_TYPE
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pragma
+    (attribute_pragma
+      name: (string_literal)))
+  (function_block_declaration
+    name: (identifier)
+    (var_block
+      (pragma
+        (attribute_pragma
+          name: (string_literal)
+          value: (string_literal)))
+      (variable_declaration
+        names: (identifier)
+        type: (elementary_type))
+      (pragma
+        (attribute_pragma
+          name: (string_literal)
+          value: (string_literal)))
+      (variable_declaration
+        names: (identifier)
+        type: (elementary_type)
+        initial_value: (integer_literal))))
+  (type_declaration
+    (type_definition
+      name: (identifier)
+      definition: (structure_type_inline
+        (structure_field
+          (pragma
+            (attribute_pragma
+              name: (string_literal)))
+          name: (identifier)
+          type: (elementary_type))))))
+
+================================================================================
+Conditional directive kinds and conditions
+================================================================================
+
+{IF defined (bSim)}
+{IF defined (variable: bSim)}
+{ELSIF hasattribute (variable: bSim, 'hide')}
+{ELSE}
+{END_IF}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pragma
+    (conditional_directive
+      kind: (if)
+      condition: (condition_text)))
+  (pragma
+    (conditional_directive
+      kind: (if)
+      condition: (condition_text)))
+  (pragma
+    (conditional_directive
+      kind: (elsif)
+      condition: (condition_text)))
+  (pragma
+    (conditional_directive
+      kind: (else)))
+  (pragma
+    (conditional_directive
+      kind: (end_if))))
+
+================================================================================
+Conditional directive spacing and casing
+================================================================================
+
+{if(defined(a))}
+{ ElsIf defined (b) AND defined (c)
+}
+{ else }
+{  end_if  }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pragma
+    (conditional_directive
+      kind: (if)
+      condition: (condition_text)))
+  (pragma
+    (conditional_directive
+      kind: (elsif)
+      condition: (condition_text)))
+  (pragma
+    (conditional_directive
+      kind: (else)))
+  (pragma
+    (conditional_directive
+      kind: (end_if))))
+
+================================================================================
+Conditional directives around statements stay flat
+================================================================================
+
+PROGRAM Main
+VAR
+    bLatch : BOOL;
+    {IF defined (UNIT_TEST)}
+    nTrace : INT;
+    {END_IF}
+END_VAR
+{IF defined (UNIT_TEST)}
+bLatch := FALSE;
+{ELSE}
+bLatch := TRUE;
+{END_IF}
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    (var_block
+      (variable_declaration
+        names: (identifier)
+        type: (elementary_type))
+      (pragma
+        (conditional_directive
+          kind: (if)
+          condition: (condition_text)))
+      (variable_declaration
+        names: (identifier)
+        type: (elementary_type))
+      (pragma
+        (conditional_directive
+          kind: (end_if))))
+    body: (pragma
+      (conditional_directive
+        kind: (if)
+        condition: (condition_text)))
+    body: (assignment_statement
+      left: (identifier)
+      right: (boolean_literal))
+    body: (pragma
+      (conditional_directive
+        kind: (else)))
+    body: (assignment_statement
+      left: (identifier)
+      right: (boolean_literal))
+    body: (pragma
+      (conditional_directive
+        kind: (end_if)))))
+
+================================================================================
+Unknown pragmas stay plain
+================================================================================
+
+{warning disable C0196}
+{region "Init"}
+{endregion}
+{define X}
+{info 'if this then that'}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pragma)
+  (pragma)
+  (pragma)
+  (pragma)
+  (pragma))
+
+================================================================================
+Look-alikes of the structured forms stay plain
+================================================================================
+
+{ifdef X}
+{IF}
+{ELSIF}
+{ELSE foo}
+{ELSEIF x}
+{END_IF x}
+{attributes 'x'}
+{attribute foo}
+{attribute}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pragma)
+  (pragma)
+  (pragma)
+  (pragma)
+  (pragma)
+  (pragma)
+  (pragma)
+  (pragma)
+  (pragma))
+
+================================================================================
+Attribute pragma with trailing junk recovers
+================================================================================
+
+{attribute 'x' junk}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pragma
+    (attribute_pragma
+      name: (string_literal)
+      (ERROR
+        (identifier)))))
+
+================================================================================
+Unterminated conditional directive recovers with a MISSING token
+================================================================================
+
+{IF defined (x)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pragma
+    (conditional_directive
+      kind: (if)
+      condition: (condition_text)
+      (MISSING "}"))))

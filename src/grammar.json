@@ -71,24 +71,41 @@
       }
     },
     "pragma": {
-      "type": "TOKEN",
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "{"
-          },
-          {
-            "type": "PATTERN",
-            "value": "[^}]*"
-          },
-          {
-            "type": "STRING",
-            "value": "}"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "attribute_pragma"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "conditional_directive"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_opaque_pragma"
+        },
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "{"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[^}]*"
+              },
+              {
+                "type": "STRING",
+                "value": "}"
+              }
+            ]
           }
-        ]
-      }
+        }
+      ]
     },
     "identifier": {
       "type": "PATTERN",
@@ -5940,6 +5957,199 @@
     "global_var_declaration_block": {
       "type": "SYMBOL",
       "name": "var_global"
+    },
+    "_opaque_pragma": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 3,
+        "content": {
+          "type": "PATTERN",
+          "value": "\\{\\s*(attribute\\s*[^'\"\\s}][^}]*|(if|elsif)[A-Za-z0-9_][^}]*|(attribute|if|elsif)\\s*)\\}",
+          "flags": "i"
+        }
+      }
+    },
+    "attribute_pragma": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 2,
+            "content": {
+              "type": "PATTERN",
+              "value": "\\{\\s*attribute\\s*",
+              "flags": "i"
+            }
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string_literal"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ":="
+                },
+                {
+                  "type": "FIELD",
+                  "name": "value",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "string_literal"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "conditional_directive": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "kind",
+              "content": {
+                "type": "ALIAS",
+                "content": {
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "PREC",
+                    "value": 2,
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "\\{\\s*if\\s*",
+                      "flags": "i"
+                    }
+                  }
+                },
+                "named": true,
+                "value": "if"
+              }
+            },
+            {
+              "type": "FIELD",
+              "name": "condition",
+              "content": {
+                "type": "SYMBOL",
+                "name": "condition_text"
+              }
+            },
+            {
+              "type": "STRING",
+              "value": "}"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "kind",
+              "content": {
+                "type": "ALIAS",
+                "content": {
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "PREC",
+                    "value": 2,
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "\\{\\s*elsif\\s*",
+                      "flags": "i"
+                    }
+                  }
+                },
+                "named": true,
+                "value": "elsif"
+              }
+            },
+            {
+              "type": "FIELD",
+              "name": "condition",
+              "content": {
+                "type": "SYMBOL",
+                "name": "condition_text"
+              }
+            },
+            {
+              "type": "STRING",
+              "value": "}"
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "kind",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "TOKEN",
+              "content": {
+                "type": "PREC",
+                "value": 2,
+                "content": {
+                  "type": "PATTERN",
+                  "value": "\\{\\s*else\\s*\\}",
+                  "flags": "i"
+                }
+              }
+            },
+            "named": true,
+            "value": "else"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "kind",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "TOKEN",
+              "content": {
+                "type": "PREC",
+                "value": 2,
+                "content": {
+                  "type": "PATTERN",
+                  "value": "\\{\\s*end_if\\s*\\}",
+                  "flags": "i"
+                }
+              }
+            },
+            "named": true,
+            "value": "end_if"
+          }
+        }
+      ]
+    },
+    "condition_text": {
+      "type": "PATTERN",
+      "value": "[^\\s}]([^}]*[^\\s}])?"
     }
   },
   "extras": [

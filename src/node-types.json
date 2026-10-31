@@ -474,6 +474,32 @@
     }
   },
   {
+    "type": "attribute_pragma",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string_literal",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "string_literal",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "binary_expression",
     "named": true,
     "fields": {
@@ -673,6 +699,44 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "conditional_directive",
+    "named": true,
+    "fields": {
+      "condition": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "condition_text",
+            "named": true
+          }
+        ]
+      },
+      "kind": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "else",
+            "named": true
+          },
+          {
+            "type": "elsif",
+            "named": true
+          },
+          {
+            "type": "end_if",
+            "named": true
+          },
+          {
+            "type": "if",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -1404,6 +1468,25 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "pragma",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "attribute_pragma",
+          "named": true
+        },
+        {
+          "type": "conditional_directive",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -3101,6 +3184,10 @@
     "extra": true
   },
   {
+    "type": "condition_text",
+    "named": true
+  },
+  {
     "type": "date_and_time_literal",
     "named": true
   },
@@ -3113,15 +3200,27 @@
     "named": true
   },
   {
+    "type": "else",
+    "named": true
+  },
+  {
+    "type": "elsif",
+    "named": true
+  },
+  {
+    "type": "end_if",
+    "named": true
+  },
+  {
     "type": "identifier",
     "named": true
   },
   {
-    "type": "integer_literal",
+    "type": "if",
     "named": true
   },
   {
-    "type": "pragma",
+    "type": "integer_literal",
     "named": true
   },
   {
@@ -3143,5 +3242,9 @@
   {
     "type": "time_of_day_literal",
     "named": true
+  },
+  {
+    "type": "}",
+    "named": false
   }
 ]
