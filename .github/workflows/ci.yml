@@ -63,9 +63,12 @@ jobs:
 
       - run: npm ci
 
-      # test:wasm (task 3.2) and check:contract (task 2.7) are added to this step when those scripts exist.
+      # test:wasm (task 3.2) is added after the build when that script exists.
       - name: Build wasm
         run: npm run build:wasm
+
+      - name: Check node-type contract and scanner sync
+        run: npm run check:contract
 
       - name: Upload wasm artifact
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
