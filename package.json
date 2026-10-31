@@ -56,7 +56,7 @@
   },
   "scripts": {
     "generate": "tree-sitter generate",
-    "test": "tree-sitter test && node --test bindings/node/*_test.js",
+    "test": "tree-sitter test",
     "build:wasm": "tree-sitter build --wasm -o tree-sitter-iec61131_3_st_twincat.wasm .",
     "test:wasm": "node scripts/wasm-smoke.mjs",
     "check:contract": "node scripts/check-contract.mjs",

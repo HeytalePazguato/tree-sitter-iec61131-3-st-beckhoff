@@ -32,3 +32,7 @@ prebuilds/
 # The wasm is built in CI and uploaded as a release artifact, never committed.
 *.wasm
 log.html
+# Local `tree-sitter build` output
+*.dll
+*.so
+*.dylib

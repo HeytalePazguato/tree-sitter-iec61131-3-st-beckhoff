@@ -1,0 +1,165 @@
+================================================================================
+PROGRAM with IF and FOR
+================================================================================
+
+PROGRAM Main
+VAR
+    i : INT;
+    x : INT;
+END_VAR
+IF x > 0 THEN
+    x := x - 1;
+ELSE
+    x := 0;
+END_IF
+FOR i := 0 TO 9 DO
+    x := x + i;
+END_FOR
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    (identifier)
+    (var_block
+      (variable_declaration
+        (identifier)
+        (elementary_type))
+      (variable_declaration
+        (identifier)
+        (elementary_type)))
+    (if_statement
+      (binary_expression
+        (identifier)
+        (integer_literal))
+      (assignment_statement
+        (identifier)
+        (binary_expression
+          (identifier)
+          (integer_literal)))
+      (else_clause
+        (assignment_statement
+          (identifier)
+          (integer_literal))))
+    (for_statement
+      (identifier)
+      (integer_literal)
+      (integer_literal)
+      (assignment_statement
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier))))))
+
+================================================================================
+FUNCTION_BLOCK with a METHOD
+================================================================================
+
+FUNCTION_BLOCK FB_Counter
+VAR
+    nCount : INT;
+END_VAR
+METHOD Increment : INT
+VAR_INPUT
+    nStep : INT;
+END_VAR
+nCount := nCount + nStep;
+Increment := nCount;
+END_METHOD
+END_FUNCTION_BLOCK
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_block_declaration
+    (identifier)
+    (var_block
+      (variable_declaration
+        (identifier)
+        (elementary_type)))
+    (method_declaration
+      (identifier)
+      (elementary_type)
+      (var_input
+        (variable_declaration
+          (identifier)
+          (elementary_type)))
+      (assignment_statement
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier)))
+      (assignment_statement
+        (identifier)
+        (identifier)))))
+
+================================================================================
+POINTER TO INT, dereference and ADR
+================================================================================
+
+PROGRAM Main
+VAR
+    x : INT;
+    pInt : POINTER TO INT;
+END_VAR
+pInt := ADR(x);
+pInt^ := 5;
+x := pInt^;
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    (identifier)
+    (var_block
+      (variable_declaration
+        (identifier)
+        (elementary_type))
+      (variable_declaration
+        (identifier)
+        (pointer_type
+          (elementary_type))))
+    (assignment_statement
+      (identifier)
+      (address_of_expression
+        (identifier)))
+    (assignment_statement
+      (dereference_expression
+        (identifier))
+      (integer_literal))
+    (assignment_statement
+      (identifier)
+      (dereference_expression
+        (identifier)))))
+
+================================================================================
+Missing END_IF recovers with a MISSING token
+================================================================================
+
+PROGRAM Main
+VAR
+    x : INT;
+END_VAR
+IF x > 0 THEN
+    x := 1;
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    (identifier)
+    (var_block
+      (variable_declaration
+        (identifier)
+        (elementary_type)))
+    (if_statement
+      (binary_expression
+        (identifier)
+        (integer_literal))
+      (assignment_statement
+        (identifier)
+        (integer_literal))
+      (MISSING "END_IF"))))

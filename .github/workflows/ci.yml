@@ -1,8 +1,6 @@
 name: ci
 
 # Gate workflow: grammar generation check + corpus tests on the OS x Node matrix, the wasm build and contract checks, and static analysis of the workflows themselves. Triggered on every relevant branch push and on PRs targeting main or develop.
-#
-# Until task 1.5 adds grammar.js there is nothing to generate or test, so the grammar-dependent steps are guarded with `hashFiles('grammar.js') != ''`. Task 1.5 removes those guards. The dependency install, tree-sitter CLI check and workflow lint always run.
 on:
   push:
     branches: [main, develop, "release/**"]
@@ -41,17 +39,13 @@ jobs:
 
       - run: npx tree-sitter --version
 
-      # Guarded until task 1.5 adds grammar.js.
       - name: Generate parser and check it is up to date
-        if: hashFiles('grammar.js') != ''
         shell: bash
         run: |
           npx tree-sitter generate
           git diff --exit-code src/
 
-      # Guarded until task 1.5 adds grammar.js.
       - name: Test
-        if: hashFiles('grammar.js') != ''
         run: npm test
 
   wasm:
@@ -69,16 +63,11 @@ jobs:
 
       - run: npm ci
 
-      # The steps below are guarded until task 1.5 adds grammar.js (and 3.2 adds the smoke script).
-      - name: Build wasm and run smoke and contract checks
-        if: hashFiles('grammar.js') != ''
-        run: |
-          npm run build:wasm
-          npm run test:wasm
-          npm run check:contract
+      # test:wasm (task 3.2) and check:contract (task 2.7) are added to this step when those scripts exist.
+      - name: Build wasm
+        run: npm run build:wasm
 
       - name: Upload wasm artifact
-        if: hashFiles('grammar.js') != ''
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: tree-sitter-iec61131_3_st_twincat-wasm
