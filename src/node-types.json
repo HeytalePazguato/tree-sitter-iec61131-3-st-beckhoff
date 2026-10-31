@@ -270,6 +270,10 @@
         "named": true
       },
       {
+        "type": "reference_to_type",
+        "named": true
+      },
+      {
         "type": "reference_type",
         "named": true
       },
@@ -1850,6 +1854,22 @@
     }
   },
   {
+    "type": "reference_to_type",
+    "named": true,
+    "fields": {
+      "target": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_type_specifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "reference_type",
     "named": true,
     "fields": {
@@ -2691,6 +2711,16 @@
           }
         ]
       },
+      "init_arguments": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "argument_list",
+            "named": true
+          }
+        ]
+      },
       "initial_value": {
         "multiple": true,
         "required": false,
@@ -3243,6 +3273,10 @@
   },
   {
     "type": "REAL",
+    "named": false
+  },
+  {
+    "type": "REFERENCE",
     "named": false
   },
   {

@@ -11,7 +11,6 @@ END_ACTION
   (action_declaration
     name: (identifier)))
 
-
 ================================================================================
 Action with statements and a colon
 ================================================================================
@@ -34,7 +33,6 @@ END_ACTION
         left: (identifier)
         right: (integer_literal)))))
 
-
 ================================================================================
 Owner-qualified action
 ================================================================================
@@ -53,7 +51,6 @@ END_ACTION
       (assignment_statement
         left: (identifier)
         right: (boolean_literal)))))
-
 
 ================================================================================
 Actions after a function block, lowercase keywords and no colon
@@ -88,7 +85,6 @@ end_action
       (assignment_statement
         left: (identifier)
         right: (boolean_literal)))))
-
 
 ================================================================================
 Invoking an action stays a base call

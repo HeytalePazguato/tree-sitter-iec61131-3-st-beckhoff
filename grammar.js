@@ -9,6 +9,8 @@ const PRAGMA_PREC = { OPENER: 2, OPAQUE: 3 };
 // XOR 5, AND 6. AND_THEN binds like AND and OR_ELSE like OR, so the literals mirror it.
 const PREC = { OR: 4, AND: 6 };
 
+const commaSep1 = (rule) => seq(rule, repeat(seq(',', rule)));
+
 const directiveOpener = (pattern) => token(prec(PRAGMA_PREC.OPENER, pattern));
 
 export default grammar(base, {
@@ -97,6 +99,26 @@ export default grammar(base, {
       ),
 
     action_body: ($) => repeat1($._statement),
+
+    // The base only knows `REF_TO`; TwinCAT also spells it `REFERENCE TO`. Same node
+    // name and field as the B&R dialect so both expose identical nodes.
+    _type_specifier: ($, original) => choice(original, $.reference_to_type),
+
+    reference_to_type: ($) =>
+      seq(kw('REFERENCE'), kw('TO'), field('target', $._type_specifier)),
+
+    // Identical to the base rule plus `init_arguments`, the FB_init constructor
+    // arguments of an instance declaration (`fb : FB_X(nParam := 5);`).
+    variable_declaration: ($) =>
+      seq(
+        field('names', commaSep1($.identifier)),
+        optional(seq(kw('AT'), field('address', $.direct_address))),
+        ':',
+        field('type', $._type_specifier),
+        optional(field('init_arguments', $.argument_list)),
+        optional(seq(':=', field('initial_value', $._initializer))),
+        ';',
+      ),
 
     pragma: ($, original) =>
       choice(

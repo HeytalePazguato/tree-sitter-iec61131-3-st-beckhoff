@@ -240,3 +240,9 @@
   ")" @punctuation.bracket)
 (system_call
   intrinsic: (identifier) @function.builtin)
+
+; ---------------------------------------------------------------------------
+; TwinCAT: REFERENCE TO
+; ---------------------------------------------------------------------------
+(reference_to_type
+  "REFERENCE" @keyword)
