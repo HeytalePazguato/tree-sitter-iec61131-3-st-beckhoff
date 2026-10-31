@@ -1,0 +1,65 @@
+{
+  "name": "tree-sitter-iec61131-3-st-twincat",
+  "version": "0.0.0",
+  "description": "Tree-sitter grammar for Beckhoff TwinCAT 3 Structured Text, extending tree-sitter-iec61131-3-st",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-twincat.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "HeytalePazguato",
+    "email": "Heytale.Pazguato@gmail.com"
+  },
+  "main": "bindings/node",
+  "types": "bindings/node",
+  "keywords": [
+    "incremental",
+    "parsing",
+    "tree-sitter",
+    "iec61131_3_st_twincat",
+    "twincat",
+    "structured-text"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "files": [
+    "grammar.js",
+    "tree-sitter.json",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**",
+    "*.wasm"
+  ],
+  "dependencies": {
+    "node-addon-api": "^8.5.0",
+    "node-gyp-build": "^4.8.4",
+    "tree-sitter-iec61131-3-st": "~0.1.2"
+  },
+  "devDependencies": {
+    "prebuildify": "^6.0.1",
+    "tree-sitter": "~0.25.0",
+    "tree-sitter-cli": "~0.27.1",
+    "web-tree-sitter": "~0.27.1"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.25.0"
+  },
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter test && node --test bindings/node/*_test.js",
+    "build:wasm": "tree-sitter build --wasm -o tree-sitter-iec61131_3_st_twincat.wasm .",
+    "test:wasm": "node scripts/wasm-smoke.mjs",
+    "check:contract": "node scripts/check-contract.mjs",
+    "prebuild": "prebuildify --napi --strip"
+  }
+}
