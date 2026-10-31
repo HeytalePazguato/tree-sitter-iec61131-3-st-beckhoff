@@ -1,6 +1,6 @@
 // Copied from tree-sitter-iec61131-3-st 0.1.2 (src/scanner.c). Byte-identical apart from the
 // exported symbols tree_sitter_iec61131_3_st_external_scanner_* being renamed to
-// tree_sitter_iec61131_3_st_twincat_external_scanner_*.
+// tree_sitter_iec61131_3_st_beckhoff_external_scanner_*.
 #include "tree_sitter/parser.h"
 
 #include <string.h>
@@ -77,19 +77,19 @@ static const char *const KEYWORDS[] = {
 
 #define KEYWORD_COUNT ((int)(sizeof(KEYWORDS) / sizeof(KEYWORDS[0])))
 
-void *tree_sitter_iec61131_3_st_twincat_external_scanner_create(void) { return NULL; }
+void *tree_sitter_iec61131_3_st_beckhoff_external_scanner_create(void) { return NULL; }
 
-void tree_sitter_iec61131_3_st_twincat_external_scanner_destroy(void *payload) {
+void tree_sitter_iec61131_3_st_beckhoff_external_scanner_destroy(void *payload) {
   (void)payload;
 }
 
-unsigned tree_sitter_iec61131_3_st_twincat_external_scanner_serialize(void *payload, char *buffer) {
+unsigned tree_sitter_iec61131_3_st_beckhoff_external_scanner_serialize(void *payload, char *buffer) {
   (void)payload;
   (void)buffer;
   return 0;
 }
 
-void tree_sitter_iec61131_3_st_twincat_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {
+void tree_sitter_iec61131_3_st_beckhoff_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {
   (void)payload;
   (void)buffer;
   (void)length;
@@ -109,7 +109,7 @@ static inline char to_upper(int32_t c) {
   return (c >= 'a' && c <= 'z') ? (char)(c - 'a' + 'A') : (char)c;
 }
 
-bool tree_sitter_iec61131_3_st_twincat_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
+bool tree_sitter_iec61131_3_st_beckhoff_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
   (void)payload;
   (void)valid_symbols;
 

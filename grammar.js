@@ -14,7 +14,7 @@ const commaSep1 = (rule) => seq(rule, repeat(seq(',', rule)));
 const directiveOpener = (pattern) => token(prec(PRAGMA_PREC.OPENER, pattern));
 
 export default grammar(base, {
-  name: 'iec61131_3_st_twincat',
+  name: 'iec61131_3_st_beckhoff',
 
   rules: {
     _expression: ($, original) =>

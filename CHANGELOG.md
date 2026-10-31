@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — next: 0.1.0
 
+### Changed
+
+- Renamed the package and repository from `tree-sitter-iec61131-3-st-twincat` to `tree-sitter-iec61131-3-st-beckhoff` so vendor dialects are named by brand (Beckhoff, B&R) rather than by IDE. The grammar name is now `iec61131_3_st_beckhoff` (C symbol `tree_sitter_iec61131_3_st_beckhoff`, scanner symbols `tree_sitter_iec61131_3_st_beckhoff_external_scanner_*`), the scope `source.iec61131-3.st.beckhoff` and the wasm `tree-sitter-iec61131_3_st_beckhoff.wasm`. The dialect still targets TwinCAT 3 Structured Text and the node-type contract is unchanged. Nothing had been published under the old name.
+
 ### Added
 
 - Release pipeline: `release.yml` publishes to npm with Trusted Publishing and provenance (no token, npm >= 11.5.1 asserted) behind the `npm-publish` environment, as `<X.Y.Z>-rc.<N>` to dist-tag `next` from `release/<X.Y.Z>` branches and as `<VERSION>` to `latest` from `main`, then creates the tag and a GitHub Release (pre-release for an rc) with the wasm attached and generated notes. `scripts/resolve-release.sh` holds the guards: `VERSION` 0.0.0 does nothing, a version already on npm or an existing tag is skipped, a registry error fails the run. The reusable `build-artifacts.yml` builds and tests the wasm and the Linux, macOS and Windows prebuilds in the publishing run itself.

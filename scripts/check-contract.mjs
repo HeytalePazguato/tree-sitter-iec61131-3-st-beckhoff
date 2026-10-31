@@ -1,7 +1,7 @@
-// Checks the grammar's public contract: the node types and fields consumed by @plc-st/dialect-twincat, and that src/scanner.c stays in sync with the base grammar's scanner.
+// Checks the grammar's public contract: the node types and fields consumed by @plc-st/dialect-beckhoff, and that src/scanner.c stays in sync with the base grammar's scanner.
 //
 // Paths can be overridden for negative tests without touching the repo files:
-//   CONTRACT_NODE_TYPES=<path to node-types.json>  CONTRACT_SCANNER=<path to the twincat scanner.c>
+//   CONTRACT_NODE_TYPES=<path to node-types.json>  CONTRACT_SCANNER=<path to the beckhoff scanner.c>
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -11,7 +11,7 @@ const nodeTypesPath = process.env.CONTRACT_NODE_TYPES ?? resolve(root, 'src/node
 const scannerPath = process.env.CONTRACT_SCANNER ?? resolve(root, 'src/scanner.c');
 const baseScannerPath = resolve(root, 'node_modules/tree-sitter-iec61131-3-st/src/scanner.c');
 
-// Single source of truth for the contract (TWINCAT_GRAMMAR_PLAN.md Overview). A trailing `?` marks an optional field.
+// Single source of truth for the contract (BECKHOFF_GRAMMAR_PLAN.md Overview). A trailing `?` marks an optional field.
 // Changing a name or field here is a breaking change and needs a major version.
 const NEW_NODES = {
   attribute_pragma: ['name', 'value?'],
@@ -39,7 +39,7 @@ const BASE_NODES = [
   'pragma',
 ];
 
-const SCANNER_PREFIX = 'tree_sitter_iec61131_3_st_twincat_external_scanner_';
+const SCANNER_PREFIX = 'tree_sitter_iec61131_3_st_beckhoff_external_scanner_';
 const BASE_SCANNER_PREFIX = 'tree_sitter_iec61131_3_st_external_scanner_';
 const HEADER_START = '// Copied from tree-sitter-iec61131-3-st ';
 

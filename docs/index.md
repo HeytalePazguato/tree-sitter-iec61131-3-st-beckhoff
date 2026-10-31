@@ -1,4 +1,4 @@
-# tree-sitter-iec61131-3-st-twincat
+# tree-sitter-iec61131-3-st-beckhoff
 
 Tree-sitter grammar for Beckhoff TwinCAT 3 Structured Text, extending [tree-sitter-iec61131-3-st](https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st).
 
@@ -7,7 +7,7 @@ Tree-sitter grammar for Beckhoff TwinCAT 3 Structured Text, extending [tree-sitt
 
 ## Links
 
-- [Source](https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-twincat)
-- [Issues](https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-twincat/issues)
-- [Releases](https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-twincat/releases)
-- [Security policy](https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-twincat/blob/main/SECURITY.md)
+- [Source](https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-beckhoff)
+- [Issues](https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-beckhoff/issues)
+- [Releases](https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-beckhoff/releases)
+- [Security policy](https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-beckhoff/blob/main/SECURITY.md)

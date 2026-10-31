@@ -1,6 +1,6 @@
 // Smoke test for the prebuilt WASM grammar consumed via web-tree-sitter.
 //
-// Loads tree-sitter-iec61131_3_st_twincat.wasm (produced by `tree-sitter build --wasm`) the way
+// Loads tree-sitter-iec61131_3_st_beckhoff.wasm (produced by `tree-sitter build --wasm`) the way
 // plc-st-test does (`Parser.init()` then `Language.load(bytes)` on web-tree-sitter ~0.27.1), parses
 // a file or a built-in snippet and exits 1 on any ERROR/MISSING node or missing expected node type.
 //
@@ -55,7 +55,7 @@ const CONTRACT_NODES = [
 ];
 
 const args = process.argv.slice(2);
-let wasmPath = join(repoRoot, "tree-sitter-iec61131_3_st_twincat.wasm");
+let wasmPath = join(repoRoot, "tree-sitter-iec61131_3_st_beckhoff.wasm");
 let expectNodes = null;
 let file = null;
 for (let i = 0; i < args.length; i++) {

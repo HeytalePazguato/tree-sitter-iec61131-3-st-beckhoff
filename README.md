@@ -1,4 +1,4 @@
-# tree-sitter-iec61131-3-st-twincat
+# tree-sitter-iec61131-3-st-beckhoff
 
 Tree-sitter grammar for Beckhoff TwinCAT 3 Structured Text, extending [tree-sitter-iec61131-3-st](https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st) through tree-sitter's grammar-extension mechanism.
 
@@ -19,7 +19,7 @@ The dialect adds only TwinCAT-specific syntax on top of the base grammar:
 Requires Node 24 or newer.
 
 ```sh
-npm install tree-sitter-iec61131-3-st-twincat
+npm install tree-sitter-iec61131-3-st-beckhoff
 ```
 
 The package ships prebuilt Node addons for Linux, macOS and Windows; on any other platform `npm install` compiles the addon from `src/`, which needs a C toolchain. It also ships a wasm build, which needs neither.
@@ -32,10 +32,10 @@ Install the optional peer dependency `tree-sitter` (`^0.25`), then:
 
 ```js
 import Parser from "tree-sitter";
-import TwinCAT from "tree-sitter-iec61131-3-st-twincat";
+import Beckhoff from "tree-sitter-iec61131-3-st-beckhoff";
 
 const parser = new Parser();
-parser.setLanguage(TwinCAT);
+parser.setLanguage(Beckhoff);
 
 const tree = parser.parse("FUNCTION_BLOCK FB_A\nbOut S= bIn;\nEND_FUNCTION_BLOCK\n");
 console.log(tree.rootNode.toString());
@@ -49,7 +49,7 @@ The wasm has ABI 15 and works with `web-tree-sitter` `~0.27.1`:
 import { readFileSync } from "node:fs";
 import { Language, Parser } from "web-tree-sitter";
 
-const wasmUrl = import.meta.resolve("tree-sitter-iec61131-3-st-twincat/tree-sitter-iec61131_3_st_twincat.wasm");
+const wasmUrl = import.meta.resolve("tree-sitter-iec61131-3-st-beckhoff/tree-sitter-iec61131_3_st_beckhoff.wasm");
 
 await Parser.init();
 const language = await Language.load(new Uint8Array(readFileSync(new URL(wasmUrl))));

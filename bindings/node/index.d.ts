@@ -25,7 +25,7 @@ type NodeInfo =
  *
  * @example
  * import Parser from "tree-sitter";
- * import Iec61131_3StTwincat from "tree-sitter-iec61131-3-st-twincat";
+ * import Iec61131_3StBeckhoff from "tree-sitter-iec61131-3-st-beckhoff";
  *
  * const parser = new Parser();
  * parser.setLanguage(Iec61131_3St);

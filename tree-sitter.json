@@ -2,15 +2,15 @@
   "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
   "grammars": [
     {
-      "name": "iec61131_3_st_twincat",
-      "camelcase": "Iec61131_3StTwincat",
-      "scope": "source.iec61131-3.st.twincat",
+      "name": "iec61131_3_st_beckhoff",
+      "camelcase": "Iec61131_3StBeckhoff",
+      "scope": "source.iec61131-3.st.beckhoff",
       "path": ".",
       "file-types": [
         "TcPOU",
         "TcDUT",
         "TcGVL",
-        "twincat.st"
+        "beckhoff.st"
       ],
       "highlights": [
         "queries/highlights.scm"
@@ -28,7 +28,7 @@
       }
     ],
     "links": {
-      "repository": "https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-twincat"
+      "repository": "https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-beckhoff"
     }
   },
   "bindings": {

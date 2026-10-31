@@ -1,11 +1,11 @@
 {
-  "name": "tree-sitter-iec61131-3-st-twincat",
+  "name": "tree-sitter-iec61131-3-st-beckhoff",
   "version": "0.0.0",
   "description": "Tree-sitter grammar for Beckhoff TwinCAT 3 Structured Text, extending tree-sitter-iec61131-3-st",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-twincat.git"
+    "url": "git+https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-beckhoff.git"
   },
   "license": "MIT",
   "author": {
@@ -18,7 +18,8 @@
     "incremental",
     "parsing",
     "tree-sitter",
-    "iec61131_3_st_twincat",
+    "iec61131_3_st_beckhoff",
+    "beckhoff",
     "twincat",
     "structured-text"
   ],
@@ -58,7 +59,7 @@
     "install": "node-gyp-build",
     "generate": "tree-sitter generate",
     "test": "tree-sitter test && node --test bindings/node/*_test.js",
-    "build:wasm": "tree-sitter build --wasm -o tree-sitter-iec61131_3_st_twincat.wasm .",
+    "build:wasm": "tree-sitter build --wasm -o tree-sitter-iec61131_3_st_beckhoff.wasm .",
     "test:wasm": "node scripts/wasm-smoke.mjs",
     "check:contract": "node scripts/check-contract.mjs",
     "prebuild": "prebuildify --napi --strip"

@@ -78,7 +78,7 @@ jobs:
       - name: Download wasm
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
-          name: tree-sitter-iec61131_3_st_twincat-wasm
+          name: tree-sitter-iec61131_3_st_beckhoff-wasm
 
       - name: Download prebuilds
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
@@ -90,7 +90,7 @@ jobs:
       - name: Assert the tarball inputs are complete
         run: |
           set -euo pipefail
-          ls -l tree-sitter-iec61131_3_st_twincat.wasm
+          ls -l tree-sitter-iec61131_3_st_beckhoff.wasm
           for platform in linux darwin win32; do
             ls -l prebuilds/"$platform"-*/*.node
           done
@@ -137,7 +137,7 @@ jobs:
       - name: Download wasm
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
-          name: tree-sitter-iec61131_3_st_twincat-wasm
+          name: tree-sitter-iec61131_3_st_beckhoff-wasm
 
       # gh creates the tag at this commit together with the release, so no job needs git credentials.
       - name: Create tag and GitHub Release
@@ -151,9 +151,9 @@ jobs:
           if [ "$PRERELEASE" = "true" ]; then
             flags+=(--prerelease)
           fi
-          gh release create "$TAG" tree-sitter-iec61131_3_st_twincat.wasm \
+          gh release create "$TAG" tree-sitter-iec61131_3_st_beckhoff.wasm \
             --target "$GITHUB_SHA" \
-            --title "tree-sitter-iec61131-3-st-twincat ${TAG#v}" \
+            --title "tree-sitter-iec61131-3-st-beckhoff ${TAG#v}" \
             --generate-notes \
             "${flags[@]}"
 
