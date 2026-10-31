@@ -37,9 +37,6 @@ chore(deps): bump <dep> from X to Y
 ci: <workflow change>
 ```
 
-The release-branch workflow looks for `[beta]` / `[rc]` keywords in commit
-messages to choose pre-release stages — keep those out of normal commits.
-
 ## Reporting bugs
 
 Use the bug report template under "New Issue".
