@@ -211,3 +211,9 @@
   "}" @keyword.directive)
 (conditional_directive
   condition: (condition_text) @string.special)
+
+; ---------------------------------------------------------------------------
+; TwinCAT: short-circuit operators
+; ---------------------------------------------------------------------------
+(short_circuit_expression
+  operator: _ @keyword.operator)

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Short-circuit operators: `AND_THEN` and `OR_ELSE` parse as `short_circuit_expression` (`left`, `operator`, `right`), case-insensitive, with the precedence of `AND` and `OR` respectively (mirroring the base precedence table); plain `AND`/`OR` stay `binary_expression`. Highlight capture and the `short_circuit` corpus are included.
 - Structured pragmas: `{attribute 'name'}` and `{attribute 'name' := 'value'}` parse as `attribute_pragma` (`name`, `value`), and `{IF}`/`{ELSIF}`/`{ELSE}`/`{END_IF}` parse as flat `conditional_directive` nodes (`kind`, `condition`) inside the base `pragma`, wherever a base pragma is valid. `kind` is a named node of type `if`, `elsif`, `else` or `end_if`; `condition` is the raw `condition_text`. Any other `{ … }`, including look-alikes such as `{ifdef X}` and `{attribute foo}`, stays a plain `pragma`. Highlight captures and the `pragmas` corpus are included.
 - Pass-through grammar extending `tree-sitter-iec61131-3-st` with no new rules, its own copy of the base external scanner (`src/scanner.c`, symbols renamed), the committed generated parser, the base highlights query and the `standard_passthrough` corpus (including the `MISSING "END_IF"` recovery case).
 - npm package manifest (`type: module`, `tree-sitter-iec61131-3-st ~0.1.2` dependency, `tree-sitter-cli` pinned `~0.27.1`) with a committed `package-lock.json`, and `tree-sitter.json` grammar metadata.

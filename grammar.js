@@ -5,12 +5,38 @@ import base, { kw } from 'tree-sitter-iec61131-3-st/grammar.js';
 // lexer, and the opaque look-alikes must outrank the openers (see `_opaque_pragma`).
 const PRAGMA_PREC = { OPENER: 2, OPAQUE: 3 };
 
+// Base grammar PREC table (node_modules/tree-sitter-iec61131-3-st/grammar.js): OR 4,
+// XOR 5, AND 6. AND_THEN binds like AND and OR_ELSE like OR, so the literals mirror it.
+const PREC = { OR: 4, AND: 6 };
+
 const directiveOpener = (pattern) => token(prec(PRAGMA_PREC.OPENER, pattern));
 
 export default grammar(base, {
   name: 'iec61131_3_st_twincat',
 
   rules: {
+    _expression: ($, original) => choice(original, $.short_circuit_expression),
+
+    short_circuit_expression: ($) =>
+      choice(
+        prec.left(
+          PREC.AND,
+          seq(
+            field('left', $._expression),
+            field('operator', kw('AND_THEN')),
+            field('right', $._expression),
+          ),
+        ),
+        prec.left(
+          PREC.OR,
+          seq(
+            field('left', $._expression),
+            field('operator', kw('OR_ELSE')),
+            field('right', $._expression),
+          ),
+        ),
+      ),
+
     pragma: ($, original) =>
       choice(
         $.attribute_pragma,

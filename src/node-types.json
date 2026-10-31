@@ -100,6 +100,10 @@
         "named": true
       },
       {
+        "type": "short_circuit_expression",
+        "named": true
+      },
+      {
         "type": "super_expression",
         "named": true
       },
@@ -1835,6 +1839,46 @@
     }
   },
   {
+    "type": "short_circuit_expression",
+    "named": true,
+    "fields": {
+      "left": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      },
+      "operator": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "AND_THEN",
+            "named": false
+          },
+          {
+            "type": "OR_ELSE",
+            "named": false
+          }
+        ]
+      },
+      "right": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "source_file",
     "named": true,
     "root": true,
@@ -2651,6 +2695,10 @@
     "named": false
   },
   {
+    "type": "AND_THEN",
+    "named": false
+  },
+  {
     "type": "ANY",
     "named": false
   },
@@ -2964,6 +3012,10 @@
   },
   {
     "type": "OR",
+    "named": false
+  },
+  {
+    "type": "OR_ELSE",
     "named": false
   },
   {

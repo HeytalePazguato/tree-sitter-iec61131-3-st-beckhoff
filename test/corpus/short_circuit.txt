@@ -1,0 +1,149 @@
+================================================================================
+AND_THEN chain with parenthesized operands
+================================================================================
+
+PROGRAM P
+IF a AND_THEN (b <> 0) AND_THEN (c / b > 1) THEN
+  x := 1;
+END_IF
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (if_statement
+      condition: (short_circuit_expression
+        left: (short_circuit_expression
+          left: (identifier)
+          right: (parenthesized_expression
+            (binary_expression
+              left: (identifier)
+              right: (integer_literal))))
+        right: (parenthesized_expression
+          (binary_expression
+            left: (binary_expression
+              left: (identifier)
+              right: (identifier))
+            right: (integer_literal))))
+      consequence: (assignment_statement
+        left: (identifier)
+        right: (integer_literal)))))
+
+================================================================================
+OR_ELSE with a call operand
+================================================================================
+
+PROGRAM P
+y := x OR_ELSE Fails();
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (assignment_statement
+      left: (identifier)
+      right: (short_circuit_expression
+        left: (identifier)
+        right: (call_expression
+          function: (identifier)
+          arguments: (argument_list))))))
+
+================================================================================
+AND_THEN binds tighter than OR_ELSE
+================================================================================
+
+PROGRAM P
+z := a OR_ELSE b AND_THEN c;
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (assignment_statement
+      left: (identifier)
+      right: (short_circuit_expression
+        left: (identifier)
+        right: (short_circuit_expression
+          left: (identifier)
+          right: (identifier))))))
+
+================================================================================
+Lowercase and mixed-case keywords
+================================================================================
+
+PROGRAM P
+w := a and_then b;
+v := a Or_Else b;
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (assignment_statement
+      left: (identifier)
+      right: (short_circuit_expression
+        left: (identifier)
+        right: (identifier)))
+    body: (assignment_statement
+      left: (identifier)
+      right: (short_circuit_expression
+        left: (identifier)
+        right: (identifier)))))
+
+================================================================================
+Plain AND and OR stay binary expressions
+================================================================================
+
+PROGRAM P
+v := a AND b OR c;
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (assignment_statement
+      left: (identifier)
+      right: (binary_expression
+        left: (binary_expression
+          left: (identifier)
+          right: (identifier))
+        right: (identifier)))))
+
+================================================================================
+AND_THEN shares the precedence of AND
+================================================================================
+
+PROGRAM P
+u := a AND_THEN b AND c;
+t := a AND b AND_THEN c;
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (assignment_statement
+      left: (identifier)
+      right: (binary_expression
+        left: (short_circuit_expression
+          left: (identifier)
+          right: (identifier))
+        right: (identifier)))
+    body: (assignment_statement
+      left: (identifier)
+      right: (short_circuit_expression
+        left: (binary_expression
+          left: (identifier)
+          right: (identifier))
+        right: (identifier)))))
