@@ -55,8 +55,9 @@
     }
   },
   "scripts": {
+    "install": "node-gyp-build",
     "generate": "tree-sitter generate",
-    "test": "tree-sitter test",
+    "test": "tree-sitter test && node --test bindings/node/*_test.js",
     "build:wasm": "tree-sitter build --wasm -o tree-sitter-iec61131_3_st_twincat.wasm .",
     "test:wasm": "node scripts/wasm-smoke.mjs",
     "check:contract": "node scripts/check-contract.mjs",

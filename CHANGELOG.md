@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Node bindings (`binding.gyp`, `bindings/node/{binding.cc,index.js,index.d.ts}`) built from `src/parser.c` and `src/scanner.c`, an `install` script using `node-gyp-build`, and `bindings/node/binding_test.js`, which parses one node of every TwinCAT construct and asserts no parse errors and that each node type appears. A `prebuild` CI matrix job (Ubuntu, macOS, Windows; Node 26) runs `npm run prebuild` and uploads `prebuilds/` as one artifact per OS.
 - `npm run check:contract` (`scripts/check-contract.mjs`) asserts the node-type contract against `src/node-types.json` (every contract node exists, new nodes declare exactly the listed fields with the right optionality, `variable_declaration.init_arguments` is optional, reused base nodes exist) and that `src/scanner.c` equals the base scanner apart from the symbol rename and the leading header comment, printing a diff otherwise. The `wasm` CI job runs it.
 - `REFERENCE TO` types parse as `reference_to_type` (`target`), the TwinCAT spelling of the base `REF_TO`, and `variable_declaration` gains an optional `init_arguments` (`argument_list`) for FB_init constructor arguments such as `fb : FB_X(nParam := 5);`. The `base_coverage` corpus also covers the FB_init/FB_reinit/FB_exit lifecycle methods, pointers, `ADR`, dereference and `REF=` with base node names. Highlight capture included.
 - Intrinsics: `__NEW(Type[, size])` parses as `new_expression` (`type`, `size?`), `__DELETE(ptr);` as `delete_statement` (`operand`) and `__SYSTEM.Name(...)` as `system_call` (`intrinsic`, `arguments`), case-insensitive; identifiers such as `__myVar` stay plain identifiers. Highlight captures and the `intrinsics` corpus are included.
@@ -25,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - CI now really runs the stale-generation check, `npm test` and the wasm build; the `grammar.js` guards are gone. The wasm job builds and uploads the wasm only: `test:wasm` and `check:contract` join it with tasks 3.2 and 2.7.
-- `npm test` runs `tree-sitter test` only until task 3.1 adds the Node binding tests.
+- `npm test` now also runs the Node binding tests after `tree-sitter test`.
 - All GitHub Actions are pinned by commit SHA and workflows run with least-privilege permissions.
 - `prerelease.yml` and `release.yml` keep the `0.0.0` sentinel and idempotence guards; npm publishing with Trusted Publishing is not wired yet.
 - README, `mkdocs.yml` and `docs/index.md` describe this repository instead of the template placeholders.
