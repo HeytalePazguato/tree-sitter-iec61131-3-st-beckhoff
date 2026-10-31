@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Intrinsics: `__NEW(Type[, size])` parses as `new_expression` (`type`, `size?`), `__DELETE(ptr);` as `delete_statement` (`operand`) and `__SYSTEM.Name(...)` as `system_call` (`intrinsic`, `arguments`), case-insensitive; identifiers such as `__myVar` stay plain identifiers. Highlight captures and the `intrinsics` corpus are included.
 - Actions: `ACTION [Owner.]Name[:] ... END_ACTION` parses as a top-level `action_declaration` (`owner?`, `name`, `body?`), case-insensitive; the base grammar has no ACTION construct. Invoking an action stays a base `invocation_statement`. Highlight captures and the `actions` corpus are included.
 - Set/reset assignments: `S=` and `R=` parse as `set_reset_assignment_statement` (`left`, `operator` = `set_assign`|`reset_assign`, `right`), case-insensitive. Comparisons such as `IF s=1 THEN`, plain `:=` assignments, `REF=` and identifiers named `S`/`R` are unaffected. Highlight capture and the `set_reset_assign` corpus are included.
 - Short-circuit operators: `AND_THEN` and `OR_ELSE` parse as `short_circuit_expression` (`left`, `operator`, `right`), case-insensitive, with the precedence of `AND` and `OR` respectively (mirroring the base precedence table); plain `AND`/`OR` stay `binary_expression`. Highlight capture and the `short_circuit` corpus are included.

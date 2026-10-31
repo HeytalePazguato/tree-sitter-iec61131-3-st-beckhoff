@@ -231,3 +231,12 @@
   owner: (identifier) @type)
 (action_declaration
   name: (identifier) @function)
+
+; ---------------------------------------------------------------------------
+; TwinCAT: __NEW / __DELETE / __SYSTEM intrinsics
+; ---------------------------------------------------------------------------
+(new_expression
+  "(" @punctuation.bracket
+  ")" @punctuation.bracket)
+(system_call
+  intrinsic: (identifier) @function.builtin)

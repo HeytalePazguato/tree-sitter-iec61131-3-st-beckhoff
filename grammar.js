@@ -15,7 +15,35 @@ export default grammar(base, {
   name: 'iec61131_3_st_twincat',
 
   rules: {
-    _expression: ($, original) => choice(original, $.short_circuit_expression),
+    _expression: ($, original) =>
+      choice(
+        original,
+        $.short_circuit_expression,
+        $.new_expression,
+        $.system_call,
+      ),
+
+    // `__NEW`, `__DELETE` and `__SYSTEM` are keywords (kw), so a longer identifier such
+    // as `__myVar` is still lexed as a plain identifier.
+    new_expression: ($) =>
+      seq(
+        kw('__NEW'),
+        '(',
+        field('type', $._type_specifier),
+        optional(seq(',', field('size', $._expression))),
+        ')',
+      ),
+
+    system_call: ($) =>
+      seq(
+        kw('__SYSTEM'),
+        '.',
+        field('intrinsic', $.identifier),
+        field('arguments', $.argument_list),
+      ),
+
+    delete_statement: ($) =>
+      seq(kw('__DELETE'), '(', field('operand', $._expression), ')', ';'),
 
     short_circuit_expression: ($) =>
       choice(
@@ -38,7 +66,7 @@ export default grammar(base, {
       ),
 
     _statement: ($, original) =>
-      choice(original, $.set_reset_assignment_statement),
+      choice(original, $.set_reset_assignment_statement, $.delete_statement),
 
     // Modelled on the base `reference_assignment_statement` / `ref_assign`. The
     // two-character tokens only win at the lexer where the parser expects an assignment

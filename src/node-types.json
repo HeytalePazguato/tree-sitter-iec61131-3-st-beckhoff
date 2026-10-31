@@ -100,6 +100,10 @@
         "named": true
       },
       {
+        "type": "new_expression",
+        "named": true
+      },
+      {
         "type": "parenthesized_expression",
         "named": true
       },
@@ -109,6 +113,10 @@
       },
       {
         "type": "super_expression",
+        "named": true
+      },
+      {
+        "type": "system_call",
         "named": true
       },
       {
@@ -177,6 +185,10 @@
       },
       {
         "type": "continue_statement",
+        "named": true
+      },
+      {
+        "type": "delete_statement",
         "named": true
       },
       {
@@ -836,6 +848,22 @@
     "type": "continue_statement",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "delete_statement",
+    "named": true,
+    "fields": {
+      "operand": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "dereference_expression",
@@ -1500,6 +1528,32 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "new_expression",
+    "named": true,
+    "fields": {
+      "size": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_type_specifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -2185,6 +2239,32 @@
     "type": "super_expression",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "system_call",
+    "named": true,
+    "fields": {
+      "arguments": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "argument_list",
+            "named": true
+          }
+        ]
+      },
+      "intrinsic": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "task_declaration",
@@ -3335,6 +3415,18 @@
   },
   {
     "type": "^",
+    "named": false
+  },
+  {
+    "type": "__DELETE",
+    "named": false
+  },
+  {
+    "type": "__NEW",
+    "named": false
+  },
+  {
+    "type": "__SYSTEM",
     "named": false
   },
   {

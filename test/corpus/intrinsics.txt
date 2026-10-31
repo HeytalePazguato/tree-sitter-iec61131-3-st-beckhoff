@@ -1,0 +1,119 @@
+================================================================================
+__NEW with a function block type
+================================================================================
+
+PROGRAM P
+pFB := __NEW(FB_Dynamic);
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (assignment_statement
+      left: (identifier)
+      right: (new_expression
+        type: (identifier)))))
+
+================================================================================
+__NEW with a size
+================================================================================
+
+PROGRAM P
+pData := __NEW(INT, 16);
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (assignment_statement
+      left: (identifier)
+      right: (new_expression
+        type: (elementary_type)
+        size: (integer_literal)))))
+
+================================================================================
+__DELETE
+================================================================================
+
+PROGRAM P
+__DELETE(pFB);
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (delete_statement
+      operand: (identifier))))
+
+================================================================================
+__SYSTEM call
+================================================================================
+
+PROGRAM P
+nTask := __SYSTEM.GetCurrentTaskIndex();
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (assignment_statement
+      left: (identifier)
+      right: (system_call
+        intrinsic: (identifier)
+        arguments: (argument_list)))))
+
+================================================================================
+Lowercase keywords
+================================================================================
+
+PROGRAM P
+p := __new(FB_X);
+__delete(p);
+n := __system.GetCurrentTaskIndex();
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (assignment_statement
+      left: (identifier)
+      right: (new_expression
+        type: (identifier)))
+    body: (delete_statement
+      operand: (identifier))
+    body: (assignment_statement
+      left: (identifier)
+      right: (system_call
+        intrinsic: (identifier)
+        arguments: (argument_list)))))
+
+================================================================================
+Identifier starting with double underscore
+================================================================================
+
+PROGRAM P
+__myVar := 1;
+__newer := __deleted;
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (assignment_statement
+      left: (identifier)
+      right: (integer_literal))
+    body: (assignment_statement
+      left: (identifier)
+      right: (identifier))))
