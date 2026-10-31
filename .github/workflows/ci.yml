@@ -63,9 +63,19 @@ jobs:
 
       - run: npm ci
 
-      # test:wasm (task 3.2) is added after the build when that script exists.
       - name: Build wasm
         run: npm run build:wasm
+
+      - name: Smoke-test wasm with web-tree-sitter
+        run: npm run test:wasm
+
+      # The smoke script must reject malformed input: invert its exit status.
+      - name: Smoke-test wasm rejects broken input
+        run: |
+          if npm run test:wasm -- test/wasm/broken.st; then
+            echo "::error::test:wasm accepted test/wasm/broken.st"
+            exit 1
+          fi
 
       - name: Check node-type contract and scanner sync
         run: npm run check:contract
