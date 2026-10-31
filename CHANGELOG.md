@@ -5,10 +5,12 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] — next: 0.1.0
+## [Unreleased] â€” next: 0.1.0
 
 ### Added
 
+- Release pipeline: `release.yml` publishes to npm with Trusted Publishing and provenance (no token, npm >= 11.5.1 asserted) behind the `npm-publish` environment, as `<X.Y.Z>-rc.<N>` to dist-tag `next` from `release/<X.Y.Z>` branches and as `<VERSION>` to `latest` from `main`, then creates the tag and a GitHub Release (pre-release for an rc) with the wasm attached and generated notes. `scripts/resolve-release.sh` holds the guards: `VERSION` 0.0.0 does nothing, a version already on npm or an existing tag is skipped, a registry error fails the run. The reusable `build-artifacts.yml` builds and tests the wasm and the Linux, macOS and Windows prebuilds in the publishing run itself.
+- README documents install, Node and web-tree-sitter usage, the node-type contract and the release flow.
 - `npm run test:wasm` (`scripts/wasm-smoke.mjs`) loads the built wasm through web-tree-sitter ~0.27.1 exactly as plc-st-test does (`Parser.init()`, `Language.load(bytes)`), parses a file or a built-in snippet exercising every contract node, and exits 1 listing the range of any ERROR/MISSING node. `--wasm <path>` selects the wasm and `--expect-nodes a,b,c` fails on absent node types (defaulting to the full contract list for the built-in snippet). The `wasm` CI job runs it, plus a negative check that `test/wasm/broken.st` is rejected.
 - Node bindings (`binding.gyp`, `bindings/node/{binding.cc,index.js,index.d.ts}`) built from `src/parser.c` and `src/scanner.c`, an `install` script using `node-gyp-build`, and `bindings/node/binding_test.js`, which parses one node of every TwinCAT construct and asserts no parse errors and that each node type appears. A `prebuild` CI matrix job (Ubuntu, macOS, Windows; Node 26) runs `npm run prebuild` and uploads `prebuilds/` as one artifact per OS.
 - `npm run check:contract` (`scripts/check-contract.mjs`) asserts the node-type contract against `src/node-types.json` (every contract node exists, new nodes declare exactly the listed fields with the right optionality, `variable_declaration.init_arguments` is optional, reused base nodes exist) and that `src/scanner.c` equals the base scanner apart from the symbol rename and the leading header comment, printing a diff otherwise. The `wasm` CI job runs it.
@@ -29,8 +31,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CI now really runs the stale-generation check, `npm test` and the wasm build; the `grammar.js` guards are gone. The wasm job builds the wasm, smoke-tests it, checks the contract and uploads it.
 - `npm test` now also runs the Node binding tests after `tree-sitter test`.
 - All GitHub Actions are pinned by commit SHA and workflows run with least-privilege permissions.
-- `prerelease.yml` and `release.yml` keep the `0.0.0` sentinel and idempotence guards; npm publishing with Trusted Publishing is not wired yet.
+- `prerelease.yml` now handles `develop` only: it uploads the wasm and prebuilds as a stamped workflow artifact. Prereleases moved to `release.yml` because the npm registry allows one Trusted Publisher per package, and they are always `-rc.N` (the `[beta]`/`[rc]` commit keywords and the alpha stage are gone).
 - README, `mkdocs.yml` and `docs/index.md` describe this repository instead of the template placeholders.
+
+### Fixed
+
+- `main` and `types` in `package.json` name explicit files, which removes the Node DEP0151 warning on `import` of the package.
+- The `[Unreleased]` heading of this file held a Windows-1252 dash, which made it invalid UTF-8.
 
 <!--
   Add entries here while working on `develop` or `release/*`. The heading
