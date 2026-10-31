@@ -1,8 +1,8 @@
-site_name: "{{PROJECT_NAME}}"
-site_description: "{{DESCRIPTION}}"
-site_url: "https://{{OWNER}}.github.io/{{PROJECT_NAME}}/"
-repo_url: "https://github.com/{{OWNER}}/{{PROJECT_NAME}}"
-repo_name: "{{OWNER}}/{{PROJECT_NAME}}"
+site_name: "tree-sitter-iec61131-3-st-twincat"
+site_description: "Tree-sitter grammar for Beckhoff TwinCAT 3 Structured Text, extending tree-sitter-iec61131-3-st."
+site_url: "https://heytalepazguato.github.io/tree-sitter-iec61131-3-st-twincat/"
+repo_url: "https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-twincat"
+repo_name: "HeytalePazguato/tree-sitter-iec61131-3-st-twincat"
 edit_uri: edit/main/docs/
 
 docs_dir: docs
