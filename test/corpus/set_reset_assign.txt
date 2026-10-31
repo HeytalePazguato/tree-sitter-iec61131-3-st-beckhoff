@@ -1,0 +1,173 @@
+================================================================================
+Set assignment
+================================================================================
+
+PROGRAM P
+bOut S= bCond;
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (set_reset_assignment_statement
+      left: (identifier)
+      operator: (set_assign)
+      right: (identifier))))
+
+================================================================================
+Reset assignment
+================================================================================
+
+PROGRAM P
+bOut R= bReset;
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (set_reset_assignment_statement
+      left: (identifier)
+      operator: (reset_assign)
+      right: (identifier))))
+
+================================================================================
+Set assignment to a member access, lowercase operator
+================================================================================
+
+PROGRAM P
+fb.bOut s= x;
+fb.bOut r= x;
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (set_reset_assignment_statement
+      left: (member_access_expression
+        object: (identifier)
+        member: (identifier))
+      operator: (set_assign)
+      right: (identifier))
+    body: (set_reset_assignment_statement
+      left: (member_access_expression
+        object: (identifier)
+        member: (identifier))
+      operator: (reset_assign)
+      right: (identifier))))
+
+================================================================================
+Comparison with a variable named s stays a comparison
+================================================================================
+
+PROGRAM P
+IF s=1 THEN
+  x := 1;
+END_IF
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (if_statement
+      condition: (binary_expression
+        left: (identifier)
+        right: (integer_literal))
+      consequence: (assignment_statement
+        left: (identifier)
+        right: (integer_literal)))))
+
+================================================================================
+Comparison with a variable named r stays a comparison
+================================================================================
+
+PROGRAM P
+IF r=2 THEN
+  x := 1;
+END_IF
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (if_statement
+      condition: (binary_expression
+        left: (identifier)
+        right: (integer_literal))
+      consequence: (assignment_statement
+        left: (identifier)
+        right: (integer_literal)))))
+
+================================================================================
+Identifiers named S and R in ordinary assignments and comparisons
+================================================================================
+
+PROGRAM P
+S := 1;
+R := S;
+IF S = R THEN
+  x := 1;
+END_IF
+IF S=R THEN
+  x := 1;
+END_IF
+y := s=1;
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (assignment_statement
+      left: (identifier)
+      right: (integer_literal))
+    body: (assignment_statement
+      left: (identifier)
+      right: (identifier))
+    body: (if_statement
+      condition: (binary_expression
+        left: (identifier)
+        right: (identifier))
+      consequence: (assignment_statement
+        left: (identifier)
+        right: (integer_literal)))
+    body: (if_statement
+      condition: (binary_expression
+        left: (identifier)
+        right: (identifier))
+      consequence: (assignment_statement
+        left: (identifier)
+        right: (integer_literal)))
+    body: (assignment_statement
+      left: (identifier)
+      right: (binary_expression
+        left: (identifier)
+        right: (integer_literal)))))
+
+================================================================================
+Reference assignment is unaffected
+================================================================================
+
+PROGRAM P
+r REF= x;
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (reference_assignment_statement
+      left: (identifier)
+      (ref_assign)
+      right: (identifier))))

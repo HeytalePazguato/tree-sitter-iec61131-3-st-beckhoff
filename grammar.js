@@ -37,6 +37,23 @@ export default grammar(base, {
         ),
       ),
 
+    _statement: ($, original) =>
+      choice(original, $.set_reset_assignment_statement),
+
+    // Modelled on the base `reference_assignment_statement` / `ref_assign`. The
+    // two-character tokens only win at the lexer where the parser expects an assignment
+    // operator, so `S := 1;`, `IF s = r THEN` and identifiers named `S`/`R` stay intact.
+    set_reset_assignment_statement: ($) =>
+      seq(
+        field('left', $._expression),
+        field('operator', choice($.set_assign, $.reset_assign)),
+        field('right', $._expression),
+        ';',
+      ),
+
+    set_assign: ($) => token(/[Ss]=/),
+    reset_assign: ($) => token(/[Rr]=/),
+
     pragma: ($, original) =>
       choice(
         $.attribute_pragma,
