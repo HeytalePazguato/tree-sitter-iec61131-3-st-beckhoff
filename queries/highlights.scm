@@ -223,3 +223,11 @@
 ; ---------------------------------------------------------------------------
 (set_assign)   @operator
 (reset_assign) @operator
+
+; ---------------------------------------------------------------------------
+; TwinCAT: actions
+; ---------------------------------------------------------------------------
+(action_declaration
+  owner: (identifier) @type)
+(action_declaration
+  name: (identifier) @function)

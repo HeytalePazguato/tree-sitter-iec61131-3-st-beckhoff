@@ -1,0 +1,116 @@
+================================================================================
+Empty action
+================================================================================
+
+ACTION Empty
+END_ACTION
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (action_declaration
+    name: (identifier)))
+
+
+================================================================================
+Action with statements and a colon
+================================================================================
+
+ACTION Reset:
+bBusy := FALSE;
+nCount := 0;
+END_ACTION
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (action_declaration
+    name: (identifier)
+    body: (action_body
+      (assignment_statement
+        left: (identifier)
+        right: (boolean_literal))
+      (assignment_statement
+        left: (identifier)
+        right: (integer_literal)))))
+
+
+================================================================================
+Owner-qualified action
+================================================================================
+
+ACTION FB_Conveyor.Reset:
+bBusy := FALSE;
+END_ACTION
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (action_declaration
+    owner: (identifier)
+    name: (identifier)
+    body: (action_body
+      (assignment_statement
+        left: (identifier)
+        right: (boolean_literal)))))
+
+
+================================================================================
+Actions after a function block, lowercase keywords and no colon
+================================================================================
+
+FUNCTION_BLOCK FB_Conveyor
+END_FUNCTION_BLOCK
+
+ACTION Reset:
+bBusy := FALSE;
+END_ACTION
+
+action fb_conveyor.start
+bRun := TRUE;
+end_action
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_block_declaration
+    name: (identifier))
+  (action_declaration
+    name: (identifier)
+    body: (action_body
+      (assignment_statement
+        left: (identifier)
+        right: (boolean_literal))))
+  (action_declaration
+    owner: (identifier)
+    name: (identifier)
+    body: (action_body
+      (assignment_statement
+        left: (identifier)
+        right: (boolean_literal)))))
+
+
+================================================================================
+Invoking an action stays a base call
+================================================================================
+
+PROGRAM P
+MyAction();
+fbInst.MyAction();
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    name: (identifier)
+    body: (invocation_statement
+      (call_expression
+        function: (identifier)
+        arguments: (argument_list)))
+    body: (invocation_statement
+      (call_expression
+        function: (member_access_expression
+          object: (identifier)
+          member: (identifier))
+        arguments: (argument_list)))))

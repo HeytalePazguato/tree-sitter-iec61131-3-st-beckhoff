@@ -54,6 +54,22 @@ export default grammar(base, {
     set_assign: ($) => token(/[Ss]=/),
     reset_assign: ($) => token(/[Rr]=/),
 
+    // The base has no ACTION construct. TwinCAT exports actions as top-level siblings of
+    // their owner, hence `owner` is optional and the rule joins `_declaration`.
+    _declaration: ($, original) => choice(original, $.action_declaration),
+
+    action_declaration: ($) =>
+      seq(
+        kw('ACTION'),
+        optional(seq(field('owner', $.identifier), '.')),
+        field('name', $.identifier),
+        optional(':'),
+        optional(field('body', $.action_body)),
+        kw('END_ACTION'),
+      ),
+
+    action_body: ($) => repeat1($._statement),
+
     pragma: ($, original) =>
       choice(
         $.attribute_pragma,

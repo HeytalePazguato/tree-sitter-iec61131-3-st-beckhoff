@@ -26,6 +26,10 @@
     "named": true,
     "subtypes": [
       {
+        "type": "action_declaration",
+        "named": true
+      },
+      {
         "type": "configuration_declaration",
         "named": true
       },
@@ -367,6 +371,57 @@
     "type": "access_direction",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "action_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "action_declaration",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "action_body",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "owner": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "address_of_expression",
@@ -2731,6 +2786,10 @@
     "named": false
   },
   {
+    "type": "ACTION",
+    "named": false
+  },
+  {
     "type": "ADR",
     "named": false
   },
@@ -2860,6 +2919,10 @@
   },
   {
     "type": "ELSIF",
+    "named": false
+  },
+  {
+    "type": "END_ACTION",
     "named": false
   },
   {
