@@ -22,7 +22,7 @@ See the [README's "Branching & releases"](README.md) section (or
 - One logical change per PR; keep diffs reviewable.
 - Run lint + build + test locally before opening the PR.
 - Update `CHANGELOG.md` under `[Unreleased]`.
-- Don't bump `VERSION` in feature PRs — that happens on the release branch.
+- Don't bump `VERSION` in feature PRs — that happens on the release branch, where the same version goes into `package.json`, `package-lock.json` and `tree-sitter.json`, followed by `npx tree-sitter generate` because `src/parser.c` embeds the `tree-sitter.json` version and CI rejects a stale parser.
 - The `ci` workflow must pass before a PR can merge.
 
 ## Commit messages
