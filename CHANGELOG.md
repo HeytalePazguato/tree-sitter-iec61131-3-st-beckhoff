@@ -5,11 +5,9 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] — next: 0.1.0
+## [Unreleased] — next: 0.2.0
 
-### Changed
-
-- Renamed the package and repository from `tree-sitter-iec61131-3-st-twincat` to `tree-sitter-iec61131-3-st-beckhoff` so vendor dialects are named by brand (Beckhoff, B&R) rather than by IDE. The grammar name is now `iec61131_3_st_beckhoff` (C symbol `tree_sitter_iec61131_3_st_beckhoff`, scanner symbols `tree_sitter_iec61131_3_st_beckhoff_external_scanner_*`), the scope `source.iec61131-3.st.beckhoff` and the wasm `tree-sitter-iec61131_3_st_beckhoff.wasm`. The dialect still targets TwinCAT 3 Structured Text and the node-type contract is unchanged. Nothing had been published under the old name.
+## [0.1.0] - 2026-11-13
 
 ### Added
 
@@ -32,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Renamed the package and repository from `tree-sitter-iec61131-3-st-twincat` to `tree-sitter-iec61131-3-st-beckhoff` so vendor dialects are named by brand (Beckhoff, B&R) rather than by IDE. The grammar name is now `iec61131_3_st_beckhoff` (C symbol `tree_sitter_iec61131_3_st_beckhoff`, scanner symbols `tree_sitter_iec61131_3_st_beckhoff_external_scanner_*`), the scope `source.iec61131-3.st.beckhoff` and the wasm `tree-sitter-iec61131_3_st_beckhoff.wasm`. The dialect still targets TwinCAT 3 Structured Text and the node-type contract is unchanged. Nothing had been published under the old name.
 - CI now really runs the stale-generation check, `npm test` and the wasm build; the `grammar.js` guards are gone. The wasm job builds the wasm, smoke-tests it, checks the contract and uploads it.
 - `npm test` now also runs the Node binding tests after `tree-sitter test`.
 - All GitHub Actions are pinned by commit SHA and workflows run with least-privilege permissions.

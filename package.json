@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-iec61131-3-st-beckhoff",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Tree-sitter grammar for Beckhoff TwinCAT 3 Structured Text, extending tree-sitter-iec61131-3-st",
   "type": "module",
   "repository": {
