@@ -1,0 +1,92 @@
+name: build-artifacts
+
+# Reusable build of everything the npm tarball ships besides the committed sources: the wasm (generated-parser check, tests, smoke test, contract check) and the native prebuilds for each OS. Both prerelease.yml and release.yml call it, so what gets published is always built in the publishing workflow run. These jobs mirror the wasm and prebuild jobs of ci.yml, whose job names are required checks on main.
+on:
+  workflow_call:
+
+permissions: {}
+
+jobs:
+  wasm:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "26"
+          # No dependency cache in jobs that produce release artifacts (cache poisoning).
+          package-manager-cache: false
+
+      - run: npm ci
+
+      - name: Generate parser and check it is up to date
+        run: |
+          npx tree-sitter generate
+          git diff --exit-code src/
+
+      - name: Test
+        run: npm test
+
+      - name: Build wasm
+        run: npm run build:wasm
+
+      - name: Smoke-test wasm with web-tree-sitter
+        run: npm run test:wasm
+
+      # The smoke script must reject malformed input: invert its exit status.
+      - name: Smoke-test wasm rejects broken input
+        run: |
+          if npm run test:wasm -- test/wasm/broken.st; then
+            echo "::error::test:wasm accepted test/wasm/broken.st"
+            exit 1
+          fi
+
+      - name: Check node-type contract and scanner sync
+        run: npm run check:contract
+
+      - name: Upload wasm artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: tree-sitter-iec61131_3_st_beckhoff-wasm
+          path: tree-sitter-iec61131_3_st_beckhoff.wasm
+          if-no-files-found: error
+          retention-days: 7
+
+  prebuild:
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+    strategy:
+      # A release needs every platform, so stop early when one fails.
+      fail-fast: true
+      matrix:
+        # windows-2022 for the same node-gyp Visual Studio finder reason as ci.yml.
+        os: [ubuntu-latest, macos-latest, windows-2022]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "26"
+          # No dependency cache in jobs that produce release artifacts (cache poisoning).
+          package-manager-cache: false
+
+      - run: npm ci
+
+      - name: Build prebuilds
+        run: npm run prebuild
+
+      - name: Upload prebuilds
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: prebuilds-${{ matrix.os }}
+          path: prebuilds/
+          if-no-files-found: error
+          retention-days: 7

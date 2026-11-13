@@ -1,0 +1,241 @@
+================================================================================
+FB lifecycle methods FB_init, FB_reinit and FB_exit
+================================================================================
+
+FUNCTION_BLOCK FB_Probe
+VAR
+    nCount : DINT;
+END_VAR
+METHOD FB_init : BOOL
+VAR_INPUT
+    bInitRetains : BOOL;
+    bInCopyCode : BOOL;
+END_VAR
+nCount := 0;
+FB_init := TRUE;
+END_METHOD
+METHOD FB_reinit
+nCount := 0;
+END_METHOD
+METHOD FB_exit
+VAR_INPUT
+    bInCopyCode : BOOL;
+END_VAR
+nCount := 0;
+END_METHOD
+END_FUNCTION_BLOCK
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_block_declaration
+    (identifier)
+    (var_block
+      (variable_declaration
+        (identifier)
+        (elementary_type)))
+    (method_declaration
+      (identifier)
+      (elementary_type)
+      (var_input
+        (variable_declaration
+          (identifier)
+          (elementary_type))
+        (variable_declaration
+          (identifier)
+          (elementary_type)))
+      (assignment_statement
+        (identifier)
+        (integer_literal))
+      (assignment_statement
+        (identifier)
+        (boolean_literal)))
+    (method_declaration
+      (identifier)
+      (assignment_statement
+        (identifier)
+        (integer_literal)))
+    (method_declaration
+      (identifier)
+      (var_input
+        (variable_declaration
+          (identifier)
+          (elementary_type)))
+      (assignment_statement
+        (identifier)
+        (integer_literal)))))
+
+================================================================================
+Pointer declaration, dereference and ADR
+================================================================================
+
+PROGRAM Main
+VAR
+    x : INT;
+    arr : ARRAY[0..4] OF INT;
+    pInt : POINTER TO INT;
+END_VAR
+pInt := ADR(x);
+pInt := ADR(arr[2]);
+pInt^ := 5;
+x := pInt^;
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    (identifier)
+    (var_block
+      (variable_declaration
+        (identifier)
+        (elementary_type))
+      (variable_declaration
+        (identifier)
+        (array_type
+          (subrange
+            (integer_literal)
+            (integer_literal))
+          (elementary_type)))
+      (variable_declaration
+        (identifier)
+        (pointer_type
+          (elementary_type))))
+    (assignment_statement
+      (identifier)
+      (address_of_expression
+        (identifier)))
+    (assignment_statement
+      (identifier)
+      (address_of_expression
+        (index_expression
+          (identifier)
+          (integer_literal))))
+    (assignment_statement
+      (dereference_expression
+        (identifier))
+      (integer_literal))
+    (assignment_statement
+      (identifier)
+      (dereference_expression
+        (identifier)))))
+
+================================================================================
+REFERENCE TO declarations and REF= assignment
+================================================================================
+
+PROGRAM Main
+VAR
+    x : INT;
+    fb : FB_X;
+    r : REFERENCE TO INT;
+    rFb : REFERENCE TO FB_X;
+END_VAR
+r REF= x;
+rFb REF= fb;
+r := 3;
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    (identifier)
+    (var_block
+      (variable_declaration
+        (identifier)
+        (elementary_type))
+      (variable_declaration
+        (identifier)
+        (identifier))
+      (variable_declaration
+        (identifier)
+        (reference_to_type
+          (elementary_type)))
+      (variable_declaration
+        (identifier)
+        (reference_to_type
+          (identifier))))
+    (reference_assignment_statement
+      (identifier)
+      (ref_assign)
+      (identifier))
+    (reference_assignment_statement
+      (identifier)
+      (ref_assign)
+      (identifier))
+    (assignment_statement
+      (identifier)
+      (integer_literal))))
+
+================================================================================
+Constructor arguments on an instance declaration
+================================================================================
+
+PROGRAM Main
+VAR
+    fbA : FB_X(nParam := 5);
+    fbB : FB_X(nStartValue := 10, sInitName := 'A');
+    fbC : FB_X;
+    nPlain : INT := 7;
+END_VAR
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    (identifier)
+    (var_block
+      (variable_declaration
+        (identifier)
+        (identifier)
+        (argument_list
+          (named_argument
+            (identifier)
+            (integer_literal))))
+      (variable_declaration
+        (identifier)
+        (identifier)
+        (argument_list
+          (named_argument
+            (identifier)
+            (integer_literal))
+          (named_argument
+            (identifier)
+            (string_literal))))
+      (variable_declaration
+        (identifier)
+        (identifier))
+      (variable_declaration
+        (identifier)
+        (elementary_type)
+        (integer_literal)))))
+
+================================================================================
+Constructor arguments combined with an initializer
+================================================================================
+
+PROGRAM Main
+VAR
+    fbA : FB_X(nParam := 5) := (nOther := 1);
+END_VAR
+END_PROGRAM
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_declaration
+    (identifier)
+    (var_block
+      (variable_declaration
+        (identifier)
+        (identifier)
+        (argument_list
+          (named_argument
+            (identifier)
+            (integer_literal)))
+        (structure_initializer
+          (structure_initializer_field
+            (identifier)
+            (integer_literal)))))))

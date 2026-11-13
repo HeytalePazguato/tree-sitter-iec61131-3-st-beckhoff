@@ -1,17 +1,13 @@
-# {{PROJECT_NAME}}
+# tree-sitter-iec61131-3-st-beckhoff
 
-{{DESCRIPTION}}
+Tree-sitter grammar for Beckhoff TwinCAT 3 Structured Text, extending [tree-sitter-iec61131-3-st](https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st).
 
-[View on GitHub](https://github.com/{{OWNER}}/{{PROJECT_NAME}}){ .md-button .md-button--primary }
-[Download latest release](https://github.com/{{OWNER}}/{{PROJECT_NAME}}/releases/latest){ .md-button }
-
-## Install
-
-<!-- TODO: add install instructions for your project -->
+!!! note "Status: pre-0.1.0"
+    The grammar itself is not published yet. This site will document the TwinCAT-specific syntax and the node-type contract once 0.1.0 ships.
 
 ## Links
 
-- [Issues](https://github.com/{{OWNER}}/{{PROJECT_NAME}}/issues)
-- [Discussions](https://github.com/{{OWNER}}/{{PROJECT_NAME}}/discussions)
-- [Releases](https://github.com/{{OWNER}}/{{PROJECT_NAME}}/releases)
-- [Security policy](https://github.com/{{OWNER}}/{{PROJECT_NAME}}/blob/main/SECURITY.md)
+- [Source](https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-beckhoff)
+- [Issues](https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-beckhoff/issues)
+- [Releases](https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-beckhoff/releases)
+- [Security policy](https://github.com/HeytalePazguato/tree-sitter-iec61131-3-st-beckhoff/blob/main/SECURITY.md)
